@@ -54,16 +54,17 @@ const Circle = () => {
             drawBall();
             y += dy;
 
- 
-            if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
-                 y = canvas.height - 30;
+
+            if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+                y = canvas.height - 30;
             }
             requestId = requestAnimationFrame(render);
 
         };
 
-        render();
 
+
+        render();
         return () => {
             cancelAnimationFrame(requestId);
         };
