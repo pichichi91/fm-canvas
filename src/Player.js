@@ -19,7 +19,6 @@ const getPixelRatio = context => {
 
 
 const Player = ({ startX, startY, endX, endY, animation, ...props }) => {
-    console.log(props)
     let ref = useRef();
     const [state] = useState({
         x: startX, y: startY, speedX: endX - startX, speedY: endY - startY
@@ -80,8 +79,6 @@ const Player = ({ startX, startY, endX, endY, animation, ...props }) => {
 
             requestId = requestAnimationFrame(render);
             if (!animation) {
-                console.log(animation)
-
                 cancelAnimationFrame(requestId);
 
             }

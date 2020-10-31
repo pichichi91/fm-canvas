@@ -7,55 +7,88 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from "@material-ui/core/styles";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import Slider from '@material-ui/core/Slider';
+
+import AddIcon from '@material-ui/icons/Add';
+import { Button } from '@material-ui/core';
+
+
 
 function App() {
 
 
+  const roles = [
+    'Sweeper Keeper',
+    'Goalkeeper',
+    'Central Defender',
+    'Ball Playing Defender',
+    'Libero',
+    'No Nonsense Central Defender',
+    'Fullback',
+    'Wingback',
+    'Inverted Wingback',
+    'Complete Wingback',
+    'Segundo Volante',
+    'Anchor Man',
+    'Regista',
+    'Defensive Midfielder',
+    'Ball Winning Midfielder',
+    'Roaming Playmaker',
+    'Wide Target Man',
+    'Raumdeuter',
+    'Inside forward ',
+    'Inverted Winger'];
+  const options = ['Option 1', 'Option 2'];
+
   const [state, setState] = useState({
     checked: false,
-    slider: 0
+    slider: 0,
+    role: '',
+    roles: []
   });
+
+  const onClearRoles = () => {
+    setState({ roles: [] });
+  };
 
 
   const handleChange = (event, newValue) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const handleChangeSlider = (event) => {
-    console.log("event.target.checked: " + event.target.checked);
-    setState({ ...state, slider: event.target.checked });
-  };
+
+  const handleClick = () => {
+    setState({ ...state, roles: state.roles.concat(state.role) });
+  }
 
 
 
- 
-
-    return <CanvasWrapper><FootballField><Field  />
-
-<Player startX={400} startY={1200} endX={500} endY={1000} animation={state.checked}></Player>
-<Player startX={100} startY={800} endX={500} endY={100}  animation={state.checked}></Player>
-<Player startX={250} startY={1000} endX={500} endY={700} animation={state.checked}></Player>
-  <Player startX={550} startY={1000} endX={500} endY={700} animation={state.checked}></Player>
-  <Player startX={700} startY={800} endX={500} endY={100} animation={state.checked}></Player>
 
 
-  <Player startX={550} startY={800} endX={500} endY={300} animation={state.checked}></Player>
-  <Player startX={250} startY={800} endX={500} endY={300} animation={state.checked}></Player>
+  return <CanvasWrapper><FootballField><Field />
+
+    <Player startX={400} startY={1200} endX={500} endY={1000} animation={state.checked}></Player>
+    <Player startX={100} startY={800} endX={500} endY={100} animation={state.checked}></Player>
+    <Player startX={250} startY={1000} endX={500} endY={700} animation={state.checked}></Player>
+    <Player startX={550} startY={1000} endX={500} endY={700} animation={state.checked}></Player>
+    <Player startX={700} startY={800} endX={500} endY={100} animation={state.checked}></Player>
 
 
-  <Player startX={415} startY={600} endX={500} endY={500} animation={state.checked}></Player>
+    <Player startX={550} startY={800} endX={500} endY={300} animation={state.checked}></Player>
+    <Player startX={250} startY={800} endX={500} endY={300} animation={state.checked}></Player>
+
+
+    <Player startX={415} startY={600} endX={500} endY={500} animation={state.checked}></Player>
 
 
 
-  <Player startX={415} startY={400} endX={500} endY={100} animation={state.checked}></Player>
-  <Player startX={530} startY={400} endX={500} endY={100} animation={state.checked}></Player>
-  <Player startX={300} startY={400} endX={500} endY={100} animation={state.checked}></Player>
+    <Player startX={415} startY={400} endX={500} endY={100} animation={state.checked}></Player>
+    <Player startX={530} startY={400} endX={500} endY={100} animation={state.checked}></Player>
+    <Player startX={300} startY={400} endX={500} endY={100} animation={state.checked}></Player>
   </FootballField>
-  <Center>
+    <Center>
 
 
-  <FormControlLabel
+      <FormControlLabel
         control={
           <CssSwitch
             checked={state.checked}
@@ -64,34 +97,79 @@ function App() {
             color="primary"
           />
         }
-        label={<span style={{ fontSize: '2rem', color: "white" }}>Animation</span>}
+        label={<span style={{ fontSize: '2rem', color: "white" }}>Show Player Movements</span>}
 
       />
-       <PositionWrapper>
-   <Autocomplete
-      id="combo-box-1"
-      options={roles}
-      className="first-element"
- 
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Role"  variant="outlined" />}
-    />
+      <PositionWrapper>
+
         <Autocomplete
-      id="combo-box-2"
-      options={positions}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Position" variant="outlined" />}
-    />
-    </PositionWrapper>
-      
+          id="role"
+          options={roles}
+          className="first-element"
+          value={state.role}
+          onChange={(event, newValue) => {
+            setState({ ...state, role: newValue });
+
+
+
+          }}
+          style={{ width: 300, paddingBottom: "1em" }}
+          renderInput={(params) => <CssTextField {...params}
+            label="Role" variant="outlined" />}
+        />
+
+      </PositionWrapper>
+      <PositionWrapper>
+
+        <CSSButon
+          variant="outlined"
+          color="primary"
+          size="large"
+          startIcon={<AddIcon />}
+          onClick={handleClick}
+        >
+          Add to Pitch
+    </CSSButon>
+      </PositionWrapper>
+
+      <PlayerList> <ol>
+      {state.roles.map(role => (
+            <li key={role}> {role} </li>
+          ))}
+      </ol></PlayerList>
+
     </Center>
+
   </CanvasWrapper>
-  
+
 }
+
+const PlayerList = styled.div`
+
+color: white;
+    font-size: 1.5em;
+
+    ol { 
+    counter-reset: item;
+    list-style-type: none;
+    padding-left: 0em;
+}
+li { display: block; }
+li:before { 
+    content: counter(item) "  "; 
+    counter-increment: item;
+    font-weight: bold;
+    color: #d2ff00;
+    width: 1em;
+    padding-right: 0.4em;
+    text-align: right
+
+}
+li:nth-child(-n+9):before {
+  padding-right: 1em;
+
+}
+`
 
 const FootballField = styled.div`
 position: relative;
@@ -125,8 +203,27 @@ flex-direction: column;
 order: -1;
 width: 100%;
 }
-
 `
+
+const CSSButon = withStyles({
+  root: {
+    '& span': {
+      color: "white",
+      fontSize: "1.2em"
+
+    },
+    '& .MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track': {
+      backgroundColor: "white"
+    },
+    '& .MuiTypography-body1': {
+      fontSize: "1.5em"
+
+    },
+    '&  .MuiButton-root': {
+      border: "1px solid white;"
+    }
+  }
+})(Button)
 
 
 const CssSwitch = withStyles({
@@ -175,40 +272,10 @@ const CssTextField = withStyles({
 })(TextField);
 
 
-const roles = [
-  { name: 'Sweeper Keeper'},
-  { name: 'Goalkeeper'},
-  { name: 'Central Defender'},
-  { name: 'Ball Playing Defender'},
-  { name: 'Libero'},
-  { name: 'No Nonsense Central Defender'},
-  { name: 'Fullback'},
-  { name: 'Wingback'},
-  { name: 'Inverted Wingback'},
-  { name: 'Complete Wingback'},
-  { name: 'Segundo Volante'},
-  { name: 'Anchor Man'},
-  { name: 'Regista'},
-  { name: 'Defensive Midfielder'},
-  { name: 'Ball Winning Midfielder'},
-  { name: 'Roaming Playmaker'},
-  { name: 'Wide Target Man'},
-  { name: 'Raumdeuter'},
-  { name: 'Inside forward '},
-  { name: 'Inverted Winger'},
-
-  
 
 
-
-
-]
-  
-  
-  ;
- 
-  const positions = [
-    { name: 'DM'}];  
+const positions = [
+  'DM'];
 
 const CanvasWrapper = styled.div`
 
@@ -222,12 +289,12 @@ canvas {
         height: 90vh !important;;
         display: block;
       }
-      @media only screen and (max-width: 768px) {
-flex-wrap: wrap;
-canvas {
-  width: 86vw !important;
-        height: 90vh !important;;
-}
+@media only screen and (max-width: 768px) {
+  flex-wrap: wrap;
+  canvas {
+    width: 86vw !important;
+    height: 90vh !important;;
+  }
 }
 `
 
