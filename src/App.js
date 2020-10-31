@@ -1,45 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react';
 import Canvas from './Canvas'
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 import Circle from "./Circle"
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+
+function App() {
 
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
+  const [state, setState] = useState({
+    checked: true,
+  });
 
-    this.handleChangeRole = this.handleChangeRole.bind(this);
-  }
-
-
-  handleChangeRole(event, value, reason){
-
-    this.setState({value: event.target.value});
-
-  }
+  const handleChange = (event) => {
+    console.log("event.target.checked: " + event.target.checked);
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
 
 
 
-  render() {
+ 
 
-    return <CanvasWrapper><CanvasBorder><Canvas width="718" height="1000" /></CanvasBorder>
-  <Circle></Circle>
+    return <CanvasWrapper><CanvasBorder><Canvas id="c" width="10" height="15"  /></CanvasBorder>
+  <Circle animation={state.checked}></Circle>
   <Center>
 
+
+  <FormControlLabel
+        control={
+          <CssSwitch
+            checked={state.checked}
+            onChange={handleChange}
+            name="checked"
+            color="primary"
+          />
+        }
+        label={<span style={{ fontSize: '2rem', color: "white" }}>Animation</span>}
+
+      />
        <PositionWrapper>
-    <Number>1</Number>   <Autocomplete
+   <Autocomplete
       id="combo-box-1"
       options={roles}
       className="first-element"
-      onChange={this.handleChangeRole}
+ 
       getOptionLabel={(option) => option.name}
       style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} onChange={this.handleChangeRole} 
-        label="Role" color="white" variant="outlined" />}
+      renderInput={(params) => <CssTextField {...params} 
+        label="Role"  variant="outlined" />}
     />
         <Autocomplete
       id="combo-box-2"
@@ -47,241 +58,61 @@ class App extends React.Component {
       getOptionLabel={(option) => option.name}
       style={{ width: 300 }}
       renderInput={(params) => <CssTextField {...params} 
-        label="Position" color="white" variant="outlined" />}
+        label="Position" variant="outlined" />}
     />
     </PositionWrapper>
-       <PositionWrapper>
-    <Number>2</Number>   <Autocomplete
-      id="combo-box-demo"
-      options={roles}
-      onChange={this.handleChangeRole}
-
-      className="first-element"
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Role" color="white" variant="outlined" />}
-    />
-        <Autocomplete
-      id="combo-box-demo"
-      options={positions}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Position" color="white" variant="outlined" />}
-    />
-    </PositionWrapper>
-       <PositionWrapper>
-    <Number>3</Number>   <Autocomplete
-      id="combo-box-demo"
-      options={roles}
-      className="first-element"
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Role" color="white" variant="outlined" />}
-    />
-        <Autocomplete
-      id="combo-box-demo"
-      options={positions}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Position" color="white" variant="outlined" />}
-    />
-    </PositionWrapper>
-       <PositionWrapper>
-    <Number>4</Number>   <Autocomplete
-      id="combo-box-demo"
-      options={roles}
-      className="first-element"
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Role" color="white" variant="outlined" />}
-    />
-        <Autocomplete
-      id="combo-box-demo"
-      options={positions}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Position" color="white" variant="outlined" />}
-    />
-    </PositionWrapper>
-       <PositionWrapper>
-    <Number>5</Number>   <Autocomplete
-      id="combo-box-demo"
-      options={roles}
-      className="first-element"
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Role" color="white" variant="outlined" />}
-    />
-        <Autocomplete
-      id="combo-box-demo"
-      options={positions}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Position" color="white" variant="outlined" />}
-    />
-    </PositionWrapper>
-       <PositionWrapper>
-    <Number>6</Number>   <Autocomplete
-      id="combo-box-demo"
-      options={roles}
-      className="first-element"
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Role" color="white" variant="outlined" />}
-    />
-        <Autocomplete
-      id="combo-box-demo"
-      options={positions}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Position" color="white" variant="outlined" />}
-    />
-    </PositionWrapper>
-       <PositionWrapper>
-    <Number>7</Number>   <Autocomplete
-      id="combo-box-demo"
-      options={roles}
-      className="first-element"
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Role" color="white" variant="outlined" />}
-    />
-        <Autocomplete
-      id="combo-box-demo"
-      options={positions}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Position" color="white" variant="outlined" />}
-    />
-    </PositionWrapper>
-       <PositionWrapper>
-    <Number>8</Number>   <Autocomplete
-      id="combo-box-demo"
-      options={roles}
-      className="first-element"
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Role" color="white" variant="outlined" />}
-    />
-        <Autocomplete
-      id="combo-box-demo"
-      options={positions}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Position" color="white" variant="outlined" />}
-    />
-    </PositionWrapper>
-       <PositionWrapper>
-    <Number>9</Number>   <Autocomplete
-      id="combo-box-demo"
-      options={roles}
-      className="first-element"
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Role" color="white" variant="outlined" />}
-    />
-        <Autocomplete
-      id="combo-box-demo"
-      options={positions}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Position" color="white" variant="outlined" />}
-    />
-    </PositionWrapper>
-    <PositionWrapper>
-<Number2>10</Number2>
-    <Autocomplete
-      id="combo-box-demo"
-      options={roles}
-      className="first-element"
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Role" color="white" variant="outlined" />}
-    />
-        <Autocomplete
-      id="combo-box-demo"
-      options={positions}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Position" color="white" variant="outlined" />}
-    />
-    </PositionWrapper>
-    <PositionWrapper>
-    <Number2>11</Number2>
-    <Autocomplete
-      id="combo-box-demo"
-      options={roles}
-      className="first-element"
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Role" color="white" variant="outlined" />}
-    />
-        <Autocomplete
-      id="combo-box-demo"
-      options={positions}
-      getOptionLabel={(option) => option.name}
-      style={{ width: 300 }}
-      renderInput={(params) => <CssTextField {...params} 
-        label="Position" color="white" variant="outlined" />}
-    />
-    </PositionWrapper>
+      
     </Center>
   </CanvasWrapper>
-  }
+  
 }
 
 const PositionWrapper = styled.div`
 display: flex;
+margin-top: 1em;
 
 .first-element {
   margin-right: 2em;
+}
+@media only screen and (max-width: 700) {
+flex-wrap: wrap
+> div {
+  width: 100%
 }
 
 `
 const Center = styled.div`
 display:flex;
-justify-content: flex-end;
+justify-content: flex-start;
 flex-direction: column;
-`
+@media only screen and (max-width: 768px) {
 
-const Number = styled.div`
-color: white;
-    font-size: xx-large;
-    padding-right: 1.5em;
-    line-height: 1.5em;
-    font-weight: bolder;
-}
-
-`
-const Number2 = styled.div`
-color: white;
-    font-size: xx-large;
-    padding-right: 1em;
-    line-height: 1.5em;
-    font-weight: bolder;
+order: -1;
+width: 100%;
 }
 
 `
 
+
+const CssSwitch = withStyles({
+  root: {
+    '& span': {
+      color: "white",
+      fontSize: "2em"
+
+    },
+    '& .MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track': {
+      backgroundColor: "white"
+    },
+    '& .MuiTypography-body1': {
+      fontSize: "2em"
+
+    },
+    '&  .MuiFormControlLabel-root': {
+      marginBottom: "1em"
+    }
+  }
+})(Switch)
 
 const CssTextField = withStyles({
   root: {
@@ -340,36 +171,30 @@ const roles = [
   
   
   ;
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-   
-  
-  
-  
-  
-  
-   
-  
-  
-
-
-
-
+ 
   const positions = [
     { name: 'DM'}];  
 
 const CanvasWrapper = styled.div`
+
+
 padding: 2em;
 display: flex;
-justify-content: space-around;`
+justify-content: space-evenly;
+
+canvas {
+        width: 40vw !important;
+        height: 90vh !important;;
+        display: block;
+      }
+      @media only screen and (max-width: 768px) {
+flex-wrap: wrap;
+canvas {
+  width: 86vw !important;
+        height: 90vh !important;;
+}
+}
+`
 
 const CanvasBorder = styled.div`
 border: 5px solid #d2ff00;

@@ -1,12 +1,32 @@
 
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 
 const Canvas = props => {
 
     const canvasRef = useRef(null)
 
 
-    const draw = (context, frameCount) => {
+    const resize =  (canvas ) => {
+
+            // Lookup the size the browser is displaying the canvas.
+            const displayWidth  = canvas.clientWidth;
+            const displayHeight = canvas.clientHeight;
+        
+            // Check if the canvas is not the same size.
+            if (canvas.width  !== displayWidth ||
+                canvas.height !== displayHeight) {
+        
+              // Make the canvas the same size
+              canvas.width  = displayWidth;
+              canvas.height = displayHeight;
+            }
+          }
+   
+          const draw = useCallback((context, frameCount) => {
+     
+    //const draw = (context, frameCount) => {
+        resize(context.canvas);
+
         context.clearRect(0, 0, context.canvas.width, context.canvas.height)
         context.fillStyle = '#000000'
         context.beginPath()
@@ -15,15 +35,11 @@ const Canvas = props => {
         context.fillStyle = '#321450'
         context.fillRect(0, 0, context.canvas.width, context.canvas.height)
 
-
-
-
         context.beginPath();
         context.moveTo(0, context.canvas.height / 2);
         context.lineTo(context.canvas.width, context.canvas.height / 2);
         context.strokeStyle = "#d2ff00";
         context.lineWidth = 1.5;
-
 
         context.stroke();
         context.closePath();
@@ -33,7 +49,6 @@ const Canvas = props => {
         context.arc(context.canvas.width / 2, context.canvas.height / 2, 73, 0, 2 * Math.PI, false);
         context.stroke();
         context.closePath();
-
 
         //Home penalty box
         context.beginPath();
@@ -47,8 +62,6 @@ const Canvas = props => {
         context.stroke();
         context.closePath();
 
-
-
         //Home half circle
         context.beginPath()
         context.arc((context.canvas.width / 2), context.canvas.height - 100, 73, -0.145 * Math.PI, 1.145 * Math.PI, true);
@@ -60,7 +73,6 @@ const Canvas = props => {
         context.rect((context.canvas.width - 322) / 2, 0, 322, 132);
         context.stroke();
         context.closePath();
-
 
         //Away goal box
         context.beginPath();
@@ -74,7 +86,7 @@ const Canvas = props => {
         context.stroke();
         context.closePath();
 
-    }
+    }, [])
 
     useEffect(() => {
         const canvas = canvasRef.current

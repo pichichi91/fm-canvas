@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import styled from 'styled-components';
 
 const getPixelRatio = context => {
     var backingStore =
@@ -16,8 +17,9 @@ const getPixelRatio = context => {
 };
 
 
-const Circle = () => {
+const Circle = (...props) => {
     let ref = useRef();
+
 
     useEffect(() => {
         let canvas = ref.current;
@@ -52,13 +54,24 @@ const Circle = () => {
 
             context.clearRect(0, 0, canvas.width, canvas.height);
             drawBall();
-            y += dy;
 
+                y += dy;
+            
 
             if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
                 y = canvas.height - 30;
+
+
             }
-            requestId = requestAnimationFrame(render);
+
+            
+                requestId = requestAnimationFrame(render);
+            if(!props[0].animation){
+                console.log(props[0].animation)
+
+                cancelAnimationFrame(requestId);
+
+            }
 
         };
 
@@ -71,11 +84,25 @@ const Circle = () => {
     });
 
     return (
-        <canvas
+        <StyledPlayer className="player-canvas"
             ref={ref}
-            style={{ width: '800px', height: '800px', position: 'absolute', top: '100px', left: '200px' }}
+            
         />
     );
 };
+
+const StyledPlayer = styled.canvas`
+
+width: 800px;
+  height: 800px;
+  position: absolute;
+  left: 190px;
+  @media only screen and (max-width: 768px) {
+  left: 0;
+  top: 190px;
+  }
+
+`
+
 
 export default Circle;
