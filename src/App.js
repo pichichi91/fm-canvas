@@ -7,13 +7,31 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from "@material-ui/core/styles";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-
+import ClearIcon from '@material-ui/icons/Clear';
 import AddIcon from '@material-ui/icons/Add';
 import { Button } from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Slider from '@material-ui/core/Slider';
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#ffffff'
+    }
+  }
+});
 
+function usePersistedState(key, defaultValue) {
+  const [state, setState] = React.useState(
+    () => JSON.parse(localStorage.getItem(key)) || defaultValue
+  );
+  React.useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state));
+  }, [key, state]);
+  return [state, setState];
+}
 
-function App() {
+function App()  {
 
 
   const roles = [
@@ -37,61 +55,78 @@ function App() {
     'Raumdeuter',
     'Inside forward ',
     'Inverted Winger'];
-  const options = ['Option 1', 'Option 2'];
 
-  const [state, setState] = useState({
-    checked: false,
-    slider: 0,
-    role: '',
-    roles: []
-  });
+
+
+
+    const [animation, setAnmiation] = usePersistedState( 'animation', false);
+    const [singleRole, setSingleRole] = usePersistedState('singleRole', "");
+    const [selectedRoles, setSelectedRoles] = usePersistedState( 'selectedRoles', [] );
+
+    const [sliderValue, setSliderValue] = usePersistedState( 'sliderValue', 30 );
+
 
   const onClearRoles = () => {
-    setState({ roles: [] });
+    setSelectedRoles([]);
   };
 
 
   const handleChange = (event, newValue) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    setAnmiation(event.target.checked);
   };
 
+  const handleSliderChange = (event, newValue) => {
+    setSliderValue(newValue)
+  };
 
   const handleClick = () => {
-    setState({ ...state, roles: state.roles.concat(state.role) });
+    if(singleRole !== ""){
+
+
+    setSelectedRoles(selectedRoles => ([...selectedRoles, singleRole]));
+}
   }
 
+  const onRemoveItem = index => {
+
+    setSelectedRoles([...selectedRoles.slice(0, index), ...selectedRoles.slice(index + 1)])
+
+
+  };
 
 
 
 
   return <CanvasWrapper><FootballField><Field />
 
-    <Player startX={400} startY={1200} endX={500} endY={1000} animation={state.checked}></Player>
-    <Player startX={100} startY={800} endX={500} endY={100} animation={state.checked}></Player>
-    <Player startX={250} startY={1000} endX={500} endY={700} animation={state.checked}></Player>
-    <Player startX={550} startY={1000} endX={500} endY={700} animation={state.checked}></Player>
-    <Player startX={700} startY={800} endX={500} endY={100} animation={state.checked}></Player>
+    <Player startX={400} startY={1200} endX={500} endY={1000} animation={animation}></Player>
+    <Player startX={100} startY={800} endX={500} endY={100} animation={animation}></Player>
+    <Player startX={250} startY={1000} endX={500} endY={700} animation={animation}></Player>
+    <Player startX={550} startY={1000} endX={500} endY={700} animation={animation}></Player>
+    <Player startX={700} startY={800} endX={500} endY={100} animation={animation}></Player>
 
 
-    <Player startX={550} startY={800} endX={500} endY={300} animation={state.checked}></Player>
-    <Player startX={250} startY={800} endX={500} endY={300} animation={state.checked}></Player>
+    <Player startX={550} startY={800} endX={500} endY={300} animation={animation}></Player>
+    <Player startX={250} startY={800} endX={500} endY={300} animation={animation}></Player>
 
 
-    <Player startX={415} startY={600} endX={500} endY={500} animation={state.checked}></Player>
+    <Player startX={415} startY={600} endX={500} endY={500} animation={animation}></Player>
 
 
 
-    <Player startX={415} startY={400} endX={500} endY={100} animation={state.checked}></Player>
-    <Player startX={530} startY={400} endX={500} endY={100} animation={state.checked}></Player>
-    <Player startX={300} startY={400} endX={500} endY={100} animation={state.checked}></Player>
+    <Player startX={415} startY={400} endX={500} endY={100} animation={animation}></Player>
+    <Player startX={530} startY={400} endX={500} endY={100} animation={animation}></Player>
+    <Player startX={300} startY={400} endX={500} endY={100} animation={animation}></Player>
   </FootballField>
+  <MuiThemeProvider theme={theme}>
+
     <Center>
 
 
       <FormControlLabel
         control={
           <CssSwitch
-            checked={state.checked}
+            checked={animation}
             onChange={handleChange}
             name="checked"
             color="primary"
@@ -101,14 +136,17 @@ function App() {
 
       />
       <PositionWrapper>
+      <Slider value={sliderValue} onChange={handleSliderChange} aria-labelledby="continuous-slider" />
+</PositionWrapper>
+      <PositionWrapper>
 
         <Autocomplete
           id="role"
           options={roles}
           className="first-element"
-          value={state.role}
+          value={singleRole}
           onChange={(event, newValue) => {
-            setState({ ...state, role: newValue });
+            setSingleRole(newValue);
 
 
 
@@ -120,25 +158,46 @@ function App() {
 
       </PositionWrapper>
       <PositionWrapper>
-
         <CSSButon
           variant="outlined"
-          color="primary"
           size="large"
+          color="primary"
+
           startIcon={<AddIcon />}
           onClick={handleClick}
+          disabled={singleRole === ""}
         >
           Add to Pitch
     </CSSButon>
+    <CSSButon
+          variant="outlined"
+          color="primary"
+          size="large"
+          startIcon={<ClearIcon />}
+          onClick={onClearRoles}
+          style={{marginLeft: "1em"}}
+        >
+          Clear Roles
+    </CSSButon>
+
       </PositionWrapper>
 
+
+
       <PlayerList> <ol>
-      {state.roles.map(role => (
-            <li key={role}> {role} </li>
+      {selectedRoles.map((role, index) => (
+            <li key={index}> {role} 
+            
+            <CSSButon onClick={() => {onRemoveItem(index)}} ><ClearIcon   style={{color: "red", paddingLeft: "0.5em",  position: "relative"}} /></CSSButon>
+         
+
+            
+         </li>
           ))}
       </ol></PlayerList>
 
     </Center>
+    </MuiThemeProvider>
 
   </CanvasWrapper>
 
@@ -212,6 +271,9 @@ const CSSButon = withStyles({
       fontSize: "1.2em"
 
     },
+    'button': {
+      borderColor: "white"
+    },
     '& .MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track': {
       backgroundColor: "white"
     },
@@ -219,7 +281,7 @@ const CSSButon = withStyles({
       fontSize: "1.5em"
 
     },
-    '&  .MuiButton-root': {
+    '&  .MuiButton-sizeLarge': {
       border: "1px solid white;"
     }
   }
@@ -271,11 +333,6 @@ const CssTextField = withStyles({
   },
 })(TextField);
 
-
-
-
-const positions = [
-  'DM'];
 
 const CanvasWrapper = styled.div`
 

@@ -24,7 +24,7 @@ const Player = ({ startX, startY, endX, endY, animation, ...props }) => {
         x: startX, y: startY, speedX: endX - startX, speedY: endY - startY
     });
 
-    const ballRadius = 10;
+    const ballRadius = 20;
 
 
     useEffect(() => {
@@ -64,8 +64,9 @@ const Player = ({ startX, startY, endX, endY, animation, ...props }) => {
             context.clearRect(0, 0, canvas.width, canvas.height);
             drawBall();
 
-
+            if (animation) {
             state.y += speedY;
+            }
 
             if (state.y <= endY) {
                 state.y = startY;
