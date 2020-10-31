@@ -203,6 +203,7 @@ function App() {
 <meta property="og:title" content="FMCanvas | Movement of Tactical Roles in Football"/>
 <meta property="og:description" content="This react based WebApp, tries to replicate movement of the available Roles in Football Manager"></meta>
 <meta property="og:image" content="https://fm-canvas.vercel.app/showcase.PNG"/>
+<meta property="twitter:image" content="https://fm-canvas.vercel.app/showcase.PNG"/>
 
 
 </Helmet>
