@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Canvas from './Canvas'
+import Field from './Field'
 import styled from 'styled-components'
-import Circle from "./Circle"
+import Player from "./Player"
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from "@material-ui/core/styles";
@@ -24,8 +24,8 @@ function App() {
 
  
 
-    return <CanvasWrapper><CanvasBorder><Canvas id="c" width="10" height="15"  /></CanvasBorder>
-  <Circle animation={state.checked}></Circle>
+    return <CanvasWrapper><Field  />
+  <Player animation={state.checked}></Player>
   <Center>
 
 
@@ -196,9 +196,7 @@ canvas {
 }
 `
 
-const CanvasBorder = styled.div`
-border: 5px solid #d2ff00;
-`
+
 
 /*canvas { display: block; width: 60vw; height: 65vh; }*/
 

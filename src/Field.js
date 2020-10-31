@@ -1,7 +1,7 @@
 
 import React, { useRef, useEffect, useCallback } from 'react'
-
-const Canvas = props => {
+import styled from "styled-components"
+const Field = props => {
 
     const canvasRef = useRef(null)
 
@@ -38,7 +38,7 @@ const Canvas = props => {
         context.beginPath();
         context.moveTo(0, context.canvas.height / 2);
         context.lineTo(context.canvas.width, context.canvas.height / 2);
-        context.strokeStyle = "#d2ff00";
+        context.strokeStyle = "#ffffff87";
         context.lineWidth = 1.5;
 
         context.stroke();
@@ -110,7 +110,9 @@ const Canvas = props => {
 
     }, [draw])
 
-    return <canvas ref={canvasRef} {...props} />
+    return <CanvasBorder><canvas id="c" width="10" height="15" ref={canvasRef} {...props} /></CanvasBorder>
 }
-
-export default Canvas
+const CanvasBorder = styled.div`
+border: 10px solid #ffffff87;
+`;
+export default Field;

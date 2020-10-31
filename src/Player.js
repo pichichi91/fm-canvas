@@ -17,7 +17,7 @@ const getPixelRatio = context => {
 };
 
 
-const Circle = (...props) => {
+const Player = (...props) => {
     let ref = useRef();
 
 
@@ -105,4 +105,4 @@ width: 800px;
 `
 
 
-export default Circle;
+export default Player;
