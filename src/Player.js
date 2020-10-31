@@ -95,7 +95,7 @@ const Player = ({ startX, startY, endX, endY, animation, ...props }) => {
     });
 
     return (
-        <StyledPlayer className="player-canvas"
+        <StyledPlayer id={props.id} className="player-canvas"
             ref={ref}
 
         />
