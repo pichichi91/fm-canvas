@@ -7,17 +7,24 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from "@material-ui/core/styles";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Slider from '@material-ui/core/Slider';
 
 function App() {
 
 
   const [state, setState] = useState({
-    checked: true,
+    checked: false,
+    slider: 0
   });
 
-  const handleChange = (event) => {
-    console.log("event.target.checked: " + event.target.checked);
+
+  const handleChange = (event, newValue) => {
     setState({ ...state, [event.target.name]: event.target.checked });
+  };
+
+  const handleChangeSlider = (event) => {
+    console.log("event.target.checked: " + event.target.checked);
+    setState({ ...state, slider: event.target.checked });
   };
 
 
@@ -25,7 +32,29 @@ function App() {
  
 
     return <CanvasWrapper><Field  />
-  <Player animation={state.checked}></Player>
+
+<Player startX={420} startY={1200} endX={500} endY={1000} animation={state.checked}></Player>
+<Player startX={100} startY={800} endX={500} endY={100}  animation={state.checked}></Player>
+<Player startX={250} startY={1000} endX={500} endY={700} animation={state.checked}></Player>
+  <Player startX={550} startY={1000} endX={500} endY={700} animation={state.checked}></Player>
+  <Player startX={700} startY={800} endX={500} endY={100} animation={state.checked}></Player>
+
+
+  <Player startX={550} startY={800} endX={500} endY={300} animation={state.checked}></Player>
+  <Player startX={250} startY={800} endX={500} endY={300} animation={state.checked}></Player>
+
+
+  <Player startX={415} startY={600} endX={500} endY={500} animation={state.checked}></Player>
+
+
+
+  <Player startX={415} startY={400} endX={500} endY={100} animation={state.checked}></Player>
+  <Player startX={530} startY={400} endX={500} endY={100} animation={state.checked}></Player>
+  <Player startX={300} startY={400} endX={500} endY={100} animation={state.checked}></Player>
+  <div>
+
+  </div>
+
   <Center>
 
 

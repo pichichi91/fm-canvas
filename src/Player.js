@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import styled from 'styled-components';
 
@@ -17,9 +17,15 @@ const getPixelRatio = context => {
 };
 
 
-const Player = (...props) => {
-    let ref = useRef();
 
+const Player = ({ startX, startY, endX, endY, animation, ...props }) => {
+    console.log(props)
+    let ref = useRef();
+    const [state] = useState({
+        x: startX, y: startY, speedX: endX - startX, speedY: endY - startY
+    });
+
+    const ballRadius = 10;
 
     useEffect(() => {
         let canvas = ref.current;
@@ -38,36 +44,37 @@ const Player = (...props) => {
         canvas.style.width = `${width}px`;
         canvas.style.height = `${height}px`;
         let requestId;
-        var x = canvas.width / 2;
-        var y = canvas.height - 30;
-        var ballRadius = 10;
-        var dy = -2;
+
+
+        const speedY = Math.abs(endY - startY) / -500;
         const drawBall = () => {
             context.beginPath();
-            context.arc(x, y, ballRadius, 0, Math.PI * 2);
+            context.arc(state.x, state.y, ballRadius, 0, Math.PI * 2);
             context.fillStyle = "#d2ff00";
             context.fill();
             context.closePath();
         }
 
         const render = () => {
-
             context.clearRect(0, 0, canvas.width, canvas.height);
             drawBall();
 
-                y += dy;
-            
 
-            if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
-                y = canvas.height - 30;
+            state.y += speedY;
+
+            if (state.y <= endY) {
+                state.y = startY;
+            }
+            if (state.y + speedY > state.endY - ballRadius || state.y + speedY < ballRadius) {
+                state.y = startY;
 
 
             }
 
-            
-                requestId = requestAnimationFrame(render);
-            if(!props[0].animation){
-                console.log(props[0].animation)
+
+            requestId = requestAnimationFrame(render);
+            if (!animation) {
+                console.log(animation)
 
                 cancelAnimationFrame(requestId);
 
@@ -86,7 +93,7 @@ const Player = (...props) => {
     return (
         <StyledPlayer className="player-canvas"
             ref={ref}
-            
+
         />
     );
 };
