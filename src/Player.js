@@ -27,6 +27,7 @@ const Player = ({ startX, startY, endX, endY, animation, ...props }) => {
 
     const ballRadius = 10;
 
+
     useEffect(() => {
         let canvas = ref.current;
         let context = canvas.getContext('2d');
@@ -44,6 +45,11 @@ const Player = ({ startX, startY, endX, endY, animation, ...props }) => {
         canvas.style.width = `${width}px`;
         canvas.style.height = `${height}px`;
         let requestId;
+
+        if(state.x === startX){
+            const sizeRatio = 1 / 800 * canvas.width
+            state.x = state.x * sizeRatio
+        }
 
 
         const speedY = Math.abs(endY - startY) / -500;
@@ -103,10 +109,10 @@ const StyledPlayer = styled.canvas`
 width: 800px;
   height: 800px;
   position: absolute;
-  left: 190px;
+  left: 0;
   @media only screen and (max-width: 768px) {
   left: 0;
-  top: 190px;
+  top: 0;
   }
 
 `

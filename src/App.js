@@ -31,9 +31,9 @@ function App() {
 
  
 
-    return <CanvasWrapper><Field  />
+    return <CanvasWrapper><FootballField><Field  />
 
-<Player startX={420} startY={1200} endX={500} endY={1000} animation={state.checked}></Player>
+<Player startX={400} startY={1200} endX={500} endY={1000} animation={state.checked}></Player>
 <Player startX={100} startY={800} endX={500} endY={100}  animation={state.checked}></Player>
 <Player startX={250} startY={1000} endX={500} endY={700} animation={state.checked}></Player>
   <Player startX={550} startY={1000} endX={500} endY={700} animation={state.checked}></Player>
@@ -51,10 +51,7 @@ function App() {
   <Player startX={415} startY={400} endX={500} endY={100} animation={state.checked}></Player>
   <Player startX={530} startY={400} endX={500} endY={100} animation={state.checked}></Player>
   <Player startX={300} startY={400} endX={500} endY={100} animation={state.checked}></Player>
-  <div>
-
-  </div>
-
+  </FootballField>
   <Center>
 
 
@@ -95,6 +92,15 @@ function App() {
   </CanvasWrapper>
   
 }
+
+const FootballField = styled.div`
+position: relative;
+width: 50%;
+@media only screen and (max-width: 768px) {
+  width: 100%;
+
+}
+`
 
 const PositionWrapper = styled.div`
 display: flex;
@@ -206,7 +212,7 @@ const roles = [
 
 const CanvasWrapper = styled.div`
 
-
+position: relative;
 padding: 2em;
 display: flex;
 justify-content: space-evenly;

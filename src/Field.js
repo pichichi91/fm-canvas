@@ -110,9 +110,16 @@ const Field = props => {
 
     }, [draw])
 
-    return <CanvasBorder><canvas id="c" width="10" height="15" ref={canvasRef} {...props} /></CanvasBorder>
+    return <StyledField id="c" width="10" height="15" ref={canvasRef} {...props} />
 }
 const CanvasBorder = styled.div`
 border: 10px solid #ffffff87;
 `;
+
+
+const StyledField = styled.canvas`
+position: absolute;
+left: 0;
+`
+
 export default Field;
