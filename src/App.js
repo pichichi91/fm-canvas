@@ -7,11 +7,24 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: ''};
 
-function App() {
+    this.handleChangeRole = this.handleChangeRole.bind(this);
+  }
+
+
+  handleChangeRole(event, value, reason){
+
+    this.setState({value: event.target.value});
+
+  }
 
 
 
+  render() {
 
     return <CanvasWrapper><CanvasBorder><Canvas width="718" height="1000" /></CanvasBorder>
   <Circle></Circle>
@@ -19,16 +32,17 @@ function App() {
 
        <PositionWrapper>
     <Number>1</Number>   <Autocomplete
-      id="combo-box-demo"
+      id="combo-box-1"
       options={roles}
       className="first-element"
+      onChange={this.handleChangeRole}
       getOptionLabel={(option) => option.name}
       style={{ width: 300, paddingBottom: "2em" }}
-      renderInput={(params) => <CssTextField {...params} 
+      renderInput={(params) => <CssTextField {...params} onChange={this.handleChangeRole} 
         label="Role" color="white" variant="outlined" />}
     />
         <Autocomplete
-      id="combo-box-demo"
+      id="combo-box-2"
       options={positions}
       getOptionLabel={(option) => option.name}
       style={{ width: 300 }}
@@ -40,6 +54,8 @@ function App() {
     <Number>2</Number>   <Autocomplete
       id="combo-box-demo"
       options={roles}
+      onChange={this.handleChangeRole}
+
       className="first-element"
       getOptionLabel={(option) => option.name}
       style={{ width: 300, paddingBottom: "2em" }}
@@ -230,7 +246,7 @@ function App() {
     </PositionWrapper>
     </Center>
   </CanvasWrapper>
-
+  }
 }
 
 const PositionWrapper = styled.div`
