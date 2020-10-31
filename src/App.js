@@ -206,8 +206,8 @@ function App() {
 <meta property="twitter:description" content="This react based WebApp, tries to replicate movement of the available Roles in Football Manager"/>
 <meta property="og:image" content="https://fm-canvas.vercel.app/showcase.PNG"/>
 <meta property="twitter:image" content="https://fm-canvas.vercel.app/showcase.PNG"/>
-
-
+<meta name="twitter:card" content="summary_large_image" data-react-helmet="true"></meta>
+<meta property="og:url" content="https://fm-canvas.vercel.app" data-react-helmet="true"></meta>
 </Helmet>
   </CanvasWrapper>
 
