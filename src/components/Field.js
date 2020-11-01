@@ -98,17 +98,17 @@ const Field = props => {
         const render = () => {
             frameCount++
             draw(context, frameCount)
-            animationFrameId = window.requestAnimationFrame(render)
+            animationFrameId = requestAnimationFrame(render)
 
         }
         render()
 
         return () => {
-            window.cancelAnimationFrame(animationFrameId)
+            cancelAnimationFrame(animationFrameId)
         }
 
 
-    }, [draw])
+    }, [draw, canvasRef])
 
     return <StyledField id="c" width="10" height="15" ref={canvasRef} {...props} />
 }

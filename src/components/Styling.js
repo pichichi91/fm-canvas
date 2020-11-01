@@ -107,3 +107,12 @@ canvas {
   }
 }
 `
+
+export const FootballField = styled.div`
+position: relative;
+width: 50%;
+@media only screen and (max-width: 768px) {
+  width: 100%;
+
+}
+`
