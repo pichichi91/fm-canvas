@@ -3,7 +3,7 @@ import Field from './components/Field'
 import InputForm from "./components/Input"
 
 import Header from "./components/Header"
-import { Main, FootballField, Footer } from "./components/Styling"
+import { Main, FootballField } from "./components/Styling"
 import PlayerList from './components/PlayerList';
 
 import { HelmetProvider } from 'react-helmet-async';

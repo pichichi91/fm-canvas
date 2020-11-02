@@ -28,7 +28,7 @@ return(
 const RolesList = styled.div`
 
 color: ${props => props.colors.primary};
-    font-size: 1.5em;
+    font-size: 1.4em;
 
     ol { 
     counter-reset: item;

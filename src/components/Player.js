@@ -16,6 +16,38 @@ const getPixelRatio = context => {
     return (window.devicePixelRatio || 1) / backingStore;
 };
 
+const resize = (canvas) => {
+
+    // Lookup the size the browser is displaying the canvas.
+    const displayWidth = canvas.clientWidth;
+    const displayHeight = canvas.clientHeight;
+
+    // Check if the canvas is not the same size.
+    if (canvas.width !== displayWidth ||
+        canvas.height !== displayHeight) {
+
+        // Make the canvas the same size
+        canvas.width = displayWidth;
+        canvas.height = displayHeight;
+    }
+
+    // TODO Adjust Position based on resize
+}
+
+const recalculateCanvas = (canvas, context) => {
+    const ratio = getPixelRatio(context);
+    const width = getComputedStyle(canvas)
+        .getPropertyValue('width')
+        .slice(0, -2);
+    const height = getComputedStyle(canvas)
+        .getPropertyValue('height')
+        .slice(0, -2);
+
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+}
 
 
 const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) => {
@@ -29,21 +61,11 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
 
     useEffect(() => {
         let canvas = ref.current;
-        let context = canvas.getContext('2d');
+        const context = canvas.getContext('2d');
 
-        let ratio = getPixelRatio(context);
-        let width = getComputedStyle(canvas)
-            .getPropertyValue('width')
-            .slice(0, -2);
-        let height = getComputedStyle(canvas)
-            .getPropertyValue('height')
-            .slice(0, -2);
-
-        canvas.width = width * ratio;
-        canvas.height = height * ratio;
-        canvas.style.width = `${width}px`;
-        canvas.style.height = `${height}px`;
+       
         let requestId;
+        recalculateCanvas(canvas, context)
 
         if(state.x === startX){
             const sizeRatio = 1 / 800 * canvas.width
@@ -62,6 +84,7 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
 
         const render = () => {
             context.clearRect(0, 0, canvas.width, canvas.height);
+            //resize(canvas);
             drawBall();
 
             if (animation) {
