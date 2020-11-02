@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Field from './components/Field'
 import InputForm from "./components/Input"
+
 import Header from "./components/Header"
-import { Main, FootballField } from "./components/Styling"
+import { Main, FootballField, Footer } from "./components/Styling"
 import PlayerList from './components/PlayerList';
 
+import { HelmetProvider } from 'react-helmet-async';
 
 function usePersistedState(key, defaultValue) {
   const [state, setState] = React.useState(
@@ -19,26 +21,12 @@ function usePersistedState(key, defaultValue) {
 function App() {
 
   const roles = [
-    'Sweeper Keeper',
-    'Goalkeeper',
-    'Central Defender',
-    'Ball Playing Defender',
-    'Libero',
-    'No Nonsense Central Defender',
-    'Fullback',
-    'Wingback',
-    'Inverted Wingback',
-    'Complete Wingback',
-    'Segundo Volante',
-    'Anchor Man',
-    'Regista',
-    'Defensive Midfielder',
-    'Ball Winning Midfielder',
-    'Roaming Playmaker',
-    'Wide Target Man',
-    'Raumdeuter',
-    'Inside forward ',
-    'Inverted Winger'];
+];
+
+useEffect(() => {
+  document.body.style.backgroundColor = colors.background;
+
+});
 
 
 
@@ -46,8 +34,9 @@ function App() {
   const [animation, setAnmiation] = usePersistedState('animation', false);
   const [singleRole, setSingleRole] = usePersistedState('singleRole', "");
   const [selectedRoles, setSelectedRoles] = usePersistedState('selectedRoles', []);
+  const [colors, setColors] = usePersistedState('colors', { "primary": "#fff", "background": "#321450", "secondary": "#d2ff00" });
 
-  const [sliderValue, setSliderValue] = usePersistedState('sliderValue', 30);
+
 
 
   const onClearRoles = () => {
@@ -59,9 +48,7 @@ function App() {
     setAnmiation(event.target.checked);
   };
 
-  const handleSliderChange = (event, newValue) => {
-    setSliderValue(newValue)
-  };
+
 
   const handleClick = () => {
     if (singleRole !== "") {
@@ -76,22 +63,25 @@ function App() {
 
 
 
-  return <Main>
-    <Header />
-    <FootballField>
-      <Field />
-      <PlayerList selectedRoles={selectedRoles} animation={animation}/>
+  return <HelmetProvider>
+    <Main colors={colors} >
+      <FootballField >
+      <Field colors={colors} />
+      <Header colors={colors}  />
+
+        <PlayerList colors={colors} selectedRoles={selectedRoles} animation={animation} />
 
 
-    </FootballField>
+      </FootballField>
 
 
-    <InputForm animation={animation} singleRole={singleRole} roles={roles} sliderValue={sliderValue} selectedRoles={selectedRoles} onRemoveItem={onRemoveItem} onClearRoles={onClearRoles} handleClick={handleClick} setSingleRole={setSingleRole} handleSliderChange={handleSliderChange} handleChange={handleChange} />
+      <InputForm colors={colors} setColors={setColors} animation={animation} singleRole={singleRole} roles={roles} selectedRoles={selectedRoles} onRemoveItem={onRemoveItem} onClearRoles={onClearRoles} handleClick={handleClick} setSingleRole={setSingleRole} handleChange={handleChange} />
 
 
 
-  </Main>
+    </Main>
 
+  </HelmetProvider>
 }
 
 

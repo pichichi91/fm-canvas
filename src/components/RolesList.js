@@ -7,11 +7,11 @@ import ClearIcon from '@material-ui/icons/Clear';
 const  RoleList = ({...props}) => {
 
 return(
-<RolesList> <ol>
+<RolesList colors={props.colors}> <ol>
       {props.selectedRoles.map((role, index) => (
         <li key={index}> {role}
 
-          <StyledButton onClick={() => { props.onRemoveItem(index) }} ><ClearIcon style={{ color: "red", paddingLeft: "0.5em", position: "relative" }} /></StyledButton>
+          <StyledButton onClick={() => { props.onRemoveItem(index) }} ><ClearIcon style={{ color: "red", position: "relative" }} /></StyledButton>
 
 
 
@@ -27,7 +27,7 @@ return(
 
 const RolesList = styled.div`
 
-color: white;
+color: ${props => props.colors.primary};
     font-size: 1.5em;
 
     ol { 
@@ -40,7 +40,7 @@ li:before {
     content: counter(item) "  "; 
     counter-increment: item;
     font-weight: bold;
-    color: #d2ff00;
+    color: ${props => props.colors.secondary};
     width: 1em;
     padding-right: 0.4em;
     text-align: right

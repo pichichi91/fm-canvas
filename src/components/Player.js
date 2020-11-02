@@ -18,7 +18,7 @@ const getPixelRatio = context => {
 
 
 
-const Player = ({ startX, startY, endX, endY, animation, ...props }) => {
+const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) => {
     let ref = useRef();
     const [state] = useState({
         x: startX, y: startY, speedX: endX - startX, speedY: endY - startY
@@ -55,7 +55,7 @@ const Player = ({ startX, startY, endX, endY, animation, ...props }) => {
         const drawBall = () => {
             context.beginPath();
             context.arc(state.x, state.y, ballRadius, 0, Math.PI * 2);
-            context.fillStyle = "#d2ff00";
+            context.fillStyle = colors.secondary;
             context.fill();
             context.closePath();
         }
@@ -95,7 +95,7 @@ const Player = ({ startX, startY, endX, endY, animation, ...props }) => {
     });
 
     return (
-        <StyledPlayer id={props.id} className="player-canvas"
+        <StyledPlayer key={Math.random()} className="player-canvas"
             ref={ref}
 
         />

@@ -1,4 +1,3 @@
-import TextField from '@material-ui/core/TextField';
 import { withStyles } from "@material-ui/core/styles";
 import Switch from '@material-ui/core/Switch';
 
@@ -16,28 +15,38 @@ flex-direction: column;
 order: -1;
 width: 100%;
 }
+
+.MuiInputBase-input, .MuiInputLabel-formControl, .MuiIconButton-label{
+  color: ${props => props.colors.primary};
+}
+
+.MuiOutlinedInput-notchedOutline, .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline  {
+  border-color: ${props => props.colors.primary}
+}
+
+.Mui-checked .MuiSwitch-thumb {
+  color: ${props => props.colors.primary};
+
+}
+.Mui-checked .MuiSwitch-thumb {
+  color: ${props => props.colors.secondary};
+
+}
+
+
 `
 
 export const StyledButton = withStyles({
   root: {
     '& span': {
-      color: "white",
       fontSize: "1.2em"
 
-    },
-    'button': {
-      borderColor: "white"
-    },
-    '& .MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track': {
-      backgroundColor: "white"
     },
     '& .MuiTypography-body1': {
       fontSize: "1.5em"
 
     },
-    '&  .MuiButton-sizeLarge': {
-      border: "1px solid white;"
-    }
+
   }
 })(Button)
 
@@ -45,12 +54,8 @@ export const StyledButton = withStyles({
 export const StyledSwitch = withStyles({
   root: {
     '& span': {
-      color: "white",
       fontSize: "2em"
 
-    },
-    '& .MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track': {
-      backgroundColor: "white"
     },
     '& .MuiTypography-body1': {
       fontSize: "2em"
@@ -62,37 +67,18 @@ export const StyledSwitch = withStyles({
   }
 })(Switch)
 
-export const StyledTextField = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: 'white',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: 'white',
-    },
-    '& .MuiFormLabel-root, & .MuiInputBase-input, & .MuiIconButton-root ': {
-      color: "white"
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'white',
-      },
-      '&:hover fieldset': {
-        borderColor: 'white',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: 'white',
-      },
-    },
-  },
-})(TextField);
+
 
 export const Main = styled.div`
+height: 92.9vh;
 
 position: relative;
 padding: 2em;
 display: flex;
 justify-content: space-evenly;
+color: ${props => props.colors.primary};
+background-color: ${props => props.colors.background};
+
 
 canvas {
         width: 40vw !important;
@@ -103,7 +89,7 @@ canvas {
   flex-wrap: wrap;
   canvas {
     width: 86vw !important;
-    height: 90vh !important;;
+    height: 90vh !important;
   }
 }
 `
@@ -115,4 +101,20 @@ width: 50%;
   width: 100%;
 
 }
+`
+
+export const Footer = styled.div`
+height: 100vh;
+padding: 2em;
+color: ${props => props.colors.primary};
+background-color: ${props => props.colors.background};
+
+`
+
+export const ColorPickerContainer = styled.div`
+display:flex;
+> div {
+  margin-right: 1em;
+}
+
 `
