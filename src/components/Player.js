@@ -47,6 +47,7 @@ const recalculateCanvas = (canvas, context) => {
     canvas.height = height * ratio;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
+
 }
 
 
@@ -65,15 +66,17 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
 
        
         let requestId;
-        recalculateCanvas(canvas, context)
+        recalculateCanvas(canvas, context,state)
 
         if(state.x === startX){
             const sizeRatio = 1 / 800 * canvas.width
             state.x = state.x * sizeRatio
         }
+        if(state.y === startY){
+            state.y = state.y * (1 / 800 * canvas.height)
+        }
 
-
-        const speedY = Math.abs(endY - startY) / -500;
+        const speedY = Math.abs(endY - startY) / -800;
         const drawBall = () => {
             context.beginPath();
             context.arc(state.x, state.y, ballRadius, 0, Math.PI * 2);
@@ -83,8 +86,11 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
         }
 
         const render = () => {
+            console.log("Height => " + canvas.height)
+            console.log("PointY => "  + state.y);
+
             context.clearRect(0, 0, canvas.width, canvas.height);
-            //resize(canvas);
+        //    resize(canvas);
             drawBall();
 
             if (animation) {

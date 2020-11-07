@@ -9,6 +9,7 @@ import { Center, StyledButton,  StyledSwitch } from "./Styling"
 import RolesList from './RolesList';
 import styled from 'styled-components'
 import ColorPicker from "./ColorPicker"
+import React from 'react';
 
 
 function InputForm({colors, setColors, ...props}) {
@@ -55,7 +56,14 @@ function InputForm({colors, setColors, ...props}) {
             className="first-element"
             value={props.singleRole}
             color="primary"
-
+            getOptionLabel={(option) => option.role}
+            renderOption={(option) => (
+        <React.Fragment>
+        <div display={{display: "flex"}}>
+           <div style={{ fontWeight: "bold", paddingRight: "0.5em" }}>{option.role}</div> <div style={{ fontSize: "0.6em" }}> <strong>Duty</strong>: {option.duty}, <strong>Position</strong>: {option.position}  </div>
+           </div>
+        </React.Fragment>
+      )}
             onChange={(event, newValue) => {props.setSingleRole(newValue) }}
             style={{ width: "177%", paddingBottom: "1em" }}
             renderInput={(params) => <TextField {...params}

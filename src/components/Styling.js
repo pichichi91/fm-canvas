@@ -24,11 +24,11 @@ width: 100%;
   border-color: ${props => props.colors.primary}
 }
 
-.Mui-checked .MuiSwitch-thumb {
+.Mui-checked .MuiSwitch-thumb, .MuiSelect-icon  {
   color: ${props => props.colors.primary};
 
 }
-.Mui-checked .MuiSwitch-thumb {
+.Mui-checked .MuiSwitch-thumb{
   color: ${props => props.colors.secondary};
 
 }

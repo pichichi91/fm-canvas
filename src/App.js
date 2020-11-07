@@ -5,8 +5,15 @@ import InputForm from "./components/Input"
 import Header from "./components/Header"
 import { Main, FootballField } from "./components/Styling"
 import PlayerList from './components/PlayerList';
+import RolesDefinitions from "./components/RolesDefinitions"
 
 import { HelmetProvider } from 'react-helmet-async';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+
 
 function usePersistedState(key, defaultValue) {
   const [state, setState] = React.useState(
@@ -20,13 +27,11 @@ function usePersistedState(key, defaultValue) {
 
 function App() {
 
-  const roles = [
-];
 
-useEffect(() => {
-  document.body.style.backgroundColor = colors.background;
+  useEffect(() => {
+    document.body.style.backgroundColor = colors.background;
 
-});
+  });
 
 
 
@@ -36,6 +41,7 @@ useEffect(() => {
   const [selectedRoles, setSelectedRoles] = usePersistedState('selectedRoles', []);
   const [colors, setColors] = usePersistedState('colors', { "primary": "#fff", "background": "#321450", "secondary": "#d2ff00" });
 
+  const [roles, setRoles] = usePersistedState('roles', []);
 
 
 
@@ -63,25 +69,37 @@ useEffect(() => {
 
 
 
-  return <HelmetProvider>
+  return <Router> <HelmetProvider>
+
+
     <Main colors={colors} >
-      <FootballField >
-      <Field colors={colors} />
-      <Header colors={colors}  />
+      <Switch>
+        <Route exact path="/">
+          <FootballField >
+            <Field colors={colors} />
+            <Header colors={colors} />
 
-        <PlayerList colors={colors} selectedRoles={selectedRoles} animation={animation} />
+            <PlayerList colors={colors} selectedRoles={selectedRoles} animation={animation} />
 
 
-      </FootballField>
+          </FootballField>
 
 
-      <InputForm colors={colors} setColors={setColors} animation={animation} singleRole={singleRole} roles={roles} selectedRoles={selectedRoles} onRemoveItem={onRemoveItem} onClearRoles={onClearRoles} handleClick={handleClick} setSingleRole={setSingleRole} handleChange={handleChange} />
+          <InputForm colors={colors} setColors={setColors} animation={animation} singleRole={singleRole} roles={roles} selectedRoles={selectedRoles} onRemoveItem={onRemoveItem} onClearRoles={onClearRoles} handleClick={handleClick} setSingleRole={setSingleRole} handleChange={handleChange} />
 
+
+        </Route>
+        <Route path="/roles">
+          <RolesDefinitions colors={colors} roles={roles} setRoles={setRoles} />
+        </Route>
+
+      </Switch>
 
 
     </Main>
-
   </HelmetProvider>
+  </Router>
+
 }
 
 

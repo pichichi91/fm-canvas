@@ -9,7 +9,10 @@ const  RoleList = ({...props}) => {
 return(
 <RolesList colors={props.colors}> <ol>
       {props.selectedRoles.map((role, index) => (
-        <li key={index}> {role}
+        <li key={index}> 
+        
+        
+        {role.role} <span style={{ fontSize: "0.6em" }}><strong>Duty</strong>: {role.duty}, <strong>Position</strong>: {role.position}</span>
 
           <StyledButton onClick={() => { props.onRemoveItem(index) }} ><ClearIcon style={{ color: "red", position: "relative" }} /></StyledButton>
 
