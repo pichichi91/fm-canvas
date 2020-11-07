@@ -77,7 +77,6 @@ padding: 2em;
 display: flex;
 justify-content: space-evenly;
 color: ${props => props.colors.primary};
-background-color: ${props => props.colors.background};
 
 
 canvas {

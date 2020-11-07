@@ -11,13 +11,14 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 import MenuItem from '@material-ui/core/MenuItem';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+    color: "white"
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -28,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
 
 
 const RolesDefinitions = ({ roles, setRoles, colors }) => {
+
+
+
+
   const classes = useStyles();
 
   const [duty, setDuty] = React.useState('');
@@ -92,13 +97,13 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
   createTheme('canvasTheme', {
 
     background: {
-      default: "#00000000",
-      text: 'inherit',
+      default: "#321450",
+      text: 'white',
 
     },
     context: {
-      background: '#00000000',
-      text: 'inherit',
+      background: '#321450',
+      text: "white",
     },
 
   });
@@ -167,7 +172,7 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
   const theme = createMuiTheme({
     palette: {
       primary: {
-        main: colors.primary
+        main: "#fff"
       }
     }
   });
@@ -175,14 +180,14 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
   const customStyles = {
     header: {
       style: {
-        color: colors.secondary,
+        color: "#D2FF00",
         fontSize: "2em"
 
       }
     },
     rows: {
       style: {
-        color: colors.primary,
+        color: "white",
 
       }
     },
@@ -191,38 +196,38 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
       style: {
         fontSize: "1.3em",
 
-        color: colors.secondary,
+        color: "#D2FF00",
         paddingLeft: '16px',
         paddingRight: '16px',
         borderBottomStyle: 'solid',
         borderBottomWidth: '0.5px',
-        borderBottomColor: colors.secondary,
+        borderBottomColor: "#D2FF00",
       },
       activeSortStyle: {
-        color: colors.secondary,
+        color: "#D2FF00",
         '&:focus': {
           outline: 'none',
         },
         '&:hover:not(:focus)': {
-          color: colors.secondary,
+          color: "#D2FF00",
         },
       },
       inactiveSortStyle: {
         '&:focus': {
           outline: 'none',
-          color: colors.secondary,
+          color: "#D2FF00",
         },
         '&:hover': {
-          color: colors.secondary,
+          color: "#D2FF00",
         },
       },
     },
   }
 
-
+const pageColors = { "primary": "#fff", "background": "#321450", "secondary": "#d2ff00" }
 
   return (
-    <div style={{ width: "90%" }}>
+    <div style={{ width: "90%", color: "white" }}>
 
       <DataTable
         title="Player Roles"
@@ -235,7 +240,7 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
 
       />
       <MuiThemeProvider theme={theme}>
-        <Center colors={colors}>
+        <Center colors={pageColors}>
 
           <form style={{ marginTop: "2em" }} noValidate autoComplete="off">
 
