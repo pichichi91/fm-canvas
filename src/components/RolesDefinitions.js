@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles } from '@material-ui/core/styles';
+import ClearIcon from '@material-ui/icons/Clear';
 
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -51,15 +52,26 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
 
 
   }
-  
+
+  const onRemoveItem = (index) => {
+    console.log(index)
+    const filtered_roles = roles.filter(role => role.id !== index);
+
+    console.log(filtered_roles)
+    setRoles(roles.filter(role => role.id !== index))
+
+  }
+
 
   const onClickStart = (event) => {
-    const xPosition = event.clientX -110;
-    const yPosition = event.clientY -200
+    const rect = event.target.getBoundingClientRect();
+    const xPosition = event.clientX - rect.left; //x position within the element.
+    const yPosition = event.clientY - rect.top;  //y position within the element.
 
 
 
-    setStartPosition({X: xPosition * 2, Y: yPosition * 2})
+    setStartPosition({X: (xPosition * 2), Y: (yPosition * 2)})
+
   }
 
   const handleClickButtton = () => {
@@ -70,10 +82,11 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
   }
 
   const onClickEnd = (event) => {
-    const xPosition = event.clientX -607;
-    const yPosition = event.clientY -200
+    const rect = event.target.getBoundingClientRect();
+    const xPosition = event.clientX - rect.left; //x position within the element.
+    const yPosition = event.clientY - rect.top;  //y position within the element.
 
-    setEndPosition({X: xPosition * 2, Y: yPosition * 2})
+    setEndPosition({X: (xPosition * 2), Y: (yPosition * 2)})
   }
 
   createTheme('canvasTheme', {
@@ -143,6 +156,11 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
       name: 'EndingY',
       selector: 'endY',
       sortable: true,
+    },
+    {
+      name: 'Delete',
+      sortable: false,
+      cell: row => <div><StyledButton onClick={() => { onRemoveItem(row.id) }} ><ClearIcon style={{ color: "red", position: "relative" }} /></StyledButton></div>,
     },
   ];
 
@@ -281,8 +299,8 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
 
 
           <div style={{display: "flex", marginTop: "2em"}}>
-      <PitchBox onClick={onClickStart}>Start</PitchBox>
-      <PitchBox onClick={onClickEnd}>End</PitchBox>
+      <PitchBox onClick={onClickStart}></PitchBox>
+      <PitchBox onClick={onClickEnd}></PitchBox>
       <div>
       <div style={{marginBottom: "1em"}}><strong>Starting-Point:</strong> <span style={{marginLeft: "0.5em"}}>X: {startPosition.X}, Y: {startPosition.Y}</span> </div>
       <div><strong>Ending-Point:</strong> <span style={{marginLeft: "0.5em"}}>X: {endPosition.X}, Y: {endPosition.Y}</span></div>
@@ -313,15 +331,18 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
 
 
 const PitchBox = styled.div`
-    width: 400px;
-    height: 400px;
+    width: 405px;
+    height: 405px;
     background: rgb(210, 255, 0);
     font-weight: 800;
-    margin-right: 3em;
+    margin-right: 1em;
     padding: 100px;
     font-size: 2em;
     color: rgb(50, 20, 80);
     box-sizing: border-box;
+    background-image: url(/pitch.png);
+    background-size: cover;
+    border: 5px solid #ffffff08;
 `
 
 export default RolesDefinitions;
