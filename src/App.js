@@ -96,8 +96,11 @@ function App() {
 
 
         </Route>
-        <Route path="/roles">
+        <Route exact path="/roles">
           <RolesDefinitions colors={colors} roles={roles} setRoles={setRoles} />
+        </Route>
+        <Route path="/roles/data">
+        <div><pre>{JSON.stringify(roles, null, 2) }</pre></div>
         </Route>
 
       </Switch>
