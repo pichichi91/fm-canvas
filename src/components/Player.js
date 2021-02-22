@@ -57,8 +57,7 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
         x: startX, y: startY, speedX: endX - startX, speedY: endY - startY
     });
 
-    const ballRadius = 20;
-
+    const [ballRadius, setBallRadius] = useState(20)
 
     useEffect(() => {
         let canvas = ref.current;
@@ -66,7 +65,7 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
 
        
         let requestId;
-        recalculateCanvas(canvas, context,state)
+        recalculateCanvas(canvas, context, state)
 
         if(state.x === startX){
             const sizeRatio = 1 / 800 * canvas.width
@@ -78,6 +77,7 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
 
         const speedY = Math.abs(endY - startY) / -800;
         const drawBall = () => {
+            console.log("drawBall")
             context.beginPath();
             context.arc(state.x, state.y, ballRadius, 0, Math.PI * 2);
             context.fillStyle = colors.secondary;
@@ -86,11 +86,11 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
         }
 
         const render = () => {
-            console.log("Height => " + canvas.height)
-            console.log("PointY => "  + state.y);
+            //console.log("Height => " + canvas.height)
+            //console.log("PointY => "  + state.y);
 
             context.clearRect(0, 0, canvas.width, canvas.height);
-        //    resize(canvas);
+            resize(canvas);
             drawBall();
 
             if (animation) {

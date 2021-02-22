@@ -11,7 +11,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 import MenuItem from '@material-ui/core/MenuItem';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +25,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const getPixelRatio = context => {
+  var backingStore =
+      context.backingStorePixelRatio ||
+      context.webkitBackingStorePixelRatio ||
+      context.mozBackingStorePixelRatio ||
+      context.msBackingStorePixelRatio ||
+      context.oBackingStorePixelRatio ||
+      context.backingStorePixelRatio ||
+      1;
+
+  return (window.devicePixelRatio || 1) / backingStore;
+};
 
 
 
@@ -117,10 +129,6 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
 
 
   ]
-
-
-
-
   if (roles.length === 0) {
     setRoles(data);
 
@@ -224,6 +232,45 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
     },
   }
 
+  const recalculateCanvas = (canvas, context) => {
+    const ratio = getPixelRatio(context);
+    const width = getComputedStyle(canvas)
+        .getPropertyValue('width')
+        .slice(0, -2);
+    const height = getComputedStyle(canvas)
+        .getPropertyValue('height')
+        .slice(0, -2);
+
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
+}
+
+  const Canvas = ({colors, positions}) => {
+    //console.log({props})
+  
+    const canvasRef = useRef(null)
+    const ballRadius  = 10;
+
+    useEffect(() => {
+      const canvas = canvasRef.current
+      const context = canvas.getContext('2d')
+
+      recalculateCanvas(canvas, context)
+
+      context.beginPath();
+      context.arc(positions.X * 0.5, positions.Y * 0.5, ballRadius, 0, Math.PI * 2);
+      context.fillStyle = colors.secondary;
+      context.fill();
+      context.closePath();
+    }, [colors.secondary, ballRadius, positions])
+    
+    return <StyledCanvas ref={canvasRef} />
+  }
+
+
 const pageColors = { "primary": "#fff", "background": "#321450", "secondary": "#d2ff00" }
 
   return (
@@ -304,8 +351,16 @@ const pageColors = { "primary": "#fff", "background": "#321450", "secondary": "#
 
 
           <div style={{display: "flex", marginTop: "2em"}}>
-      <PitchBox onClick={onClickStart}></PitchBox>
-      <PitchBox onClick={onClickEnd}></PitchBox>
+      <PitchBox onClick={onClickStart}>
+
+<Canvas colors={colors} positions={startPosition} />
+
+
+      </PitchBox>
+      <PitchBox onClick={onClickEnd}>
+      <Canvas colors={colors} positions={endPosition} />
+
+      </PitchBox>
       <div>
       <div style={{marginBottom: "1em"}}><strong>Starting-Point:</strong> <span style={{marginLeft: "0.5em"}}>X: {startPosition.X}, Y: {startPosition.Y}</span> </div>
       <div><strong>Ending-Point:</strong> <span style={{marginLeft: "0.5em"}}>X: {endPosition.X}, Y: {endPosition.Y}</span></div>
@@ -334,6 +389,9 @@ const pageColors = { "primary": "#fff", "background": "#321450", "secondary": "#
     </div>)
 }
 
+const StyledCanvas = styled.canvas`
+
+`
 
 const PitchBox = styled.div`
     width: 405px;
@@ -341,13 +399,17 @@ const PitchBox = styled.div`
     background: rgb(210, 255, 0);
     font-weight: 800;
     margin-right: 1em;
-    padding: 100px;
     font-size: 2em;
     color: rgb(50, 20, 80);
     box-sizing: border-box;
     background-image: url(/pitch.png);
     background-size: cover;
     border: 5px solid #ffffff08;
+
+    canvas {
+      width: inherit;
+      height: inherit;
+    }
 `
 
 export default RolesDefinitions;

@@ -80,8 +80,8 @@ color: ${props => props.colors.primary};
 
 
 canvas {
-        width: 40vw !important;
-        height: 90vh !important;;
+        width: 40vw ;
+        height: 90vh ;
         display: block;
       }
 @media only screen and (max-width: 768px) {

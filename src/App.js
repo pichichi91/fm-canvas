@@ -28,8 +28,8 @@ function usePersistedState(key, defaultValue) {
 function App() {
 
   useEffect(() => {
-  
-    if(window.location.href.replace(window.location.origin,'') === "/"){
+
+    if (window.location.href.replace(window.location.origin, '') === "/") {
       document.body.style.backgroundColor = colors.background;
 
 
@@ -100,7 +100,7 @@ function App() {
           <RolesDefinitions colors={colors} roles={roles} setRoles={setRoles} />
         </Route>
         <Route path="/roles/data">
-        <div><pre>{JSON.stringify(roles, null, 2) }</pre></div>
+          <div><pre>{JSON.stringify(roles, null, 2)}</pre></div>
         </Route>
 
       </Switch>
