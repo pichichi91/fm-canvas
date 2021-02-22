@@ -57,7 +57,12 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
         x: startX, y: startY, speedX: endX - startX, speedY: endY - startY
     });
 
-    const [ballRadius, setBallRadius] = useState(20)
+    const [ballRadius, setBallRadius] = useState(15)
+    const [isWaiting, setIsWaiting] = useState(false);
+
+    const [startTime, setStartTime] = useState(Date.now());
+
+    console.log(startTime);
 
     useEffect(() => {
         let canvas = ref.current;
@@ -77,7 +82,6 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
 
         const speedY = Math.abs(endY - startY) / -800;
         const drawBall = () => {
-            console.log("drawBall")
             context.beginPath();
             context.arc(state.x, state.y, ballRadius, 0, Math.PI * 2);
             context.fillStyle = colors.secondary;
@@ -86,19 +90,21 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
         }
 
         const render = () => {
-            //console.log("Height => " + canvas.height)
-            //console.log("PointY => "  + state.y);
 
             context.clearRect(0, 0, canvas.width, canvas.height);
             resize(canvas);
             drawBall();
 
-            if (animation) {
+            if (animation && !isWaiting) {
             state.y += speedY;
             }
 
             if (state.y <= endY) {
-                state.y = startY;
+
+            setIsWaiting(true);
+              
+            }  else {
+                
             }
             if (state.y + speedY > state.endY - ballRadius || state.y + speedY < ballRadius) {
                 state.y = startY;
