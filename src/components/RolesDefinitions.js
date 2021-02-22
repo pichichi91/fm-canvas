@@ -27,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
 
 const getPixelRatio = context => {
   var backingStore =
-      context.backingStorePixelRatio ||
-      context.webkitBackingStorePixelRatio ||
-      context.mozBackingStorePixelRatio ||
-      context.msBackingStorePixelRatio ||
-      context.oBackingStorePixelRatio ||
-      context.backingStorePixelRatio ||
-      1;
+    context.backingStorePixelRatio ||
+    context.webkitBackingStorePixelRatio ||
+    context.mozBackingStorePixelRatio ||
+    context.msBackingStorePixelRatio ||
+    context.oBackingStorePixelRatio ||
+    context.backingStorePixelRatio ||
+    1;
 
   return (window.devicePixelRatio || 1) / backingStore;
 };
@@ -49,10 +49,10 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
 
   const [duty, setDuty] = React.useState('');
   const [position, setPosition] = React.useState('');
-  const [startPosition, setStartPosition] = React.useState({X: 0, Y: 0});
+  const [startPosition, setStartPosition] = React.useState({ X: 0, Y: 0 });
   const [roleName, setRoleName] = React.useState('');
 
-  const [endPosition, setEndPosition] = React.useState({X: 0, Y: 0});
+  const [endPosition, setEndPosition] = React.useState({ X: 0, Y: 0 });
 
   const handleChangePosition = (event) => {
     setPosition(event.target.value);
@@ -87,12 +87,12 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
 
 
 
-    setStartPosition({X: (xPosition * 2), Y: (yPosition * 2)})
+    setStartPosition({ X: (xPosition * 2), Y: (yPosition * 2) })
 
   }
 
   const handleClickButtton = () => {
-    const newRole = {id: roles.length + 1, role: roleName, duty: duty, position: position, startX: startPosition.X, startY: startPosition.Y, endX: endPosition.X , endY: endPosition.Y}
+    const newRole = { id: roles.length + 1, role: roleName, duty: duty, position: position, startX: startPosition.X, startY: startPosition.Y, endX: endPosition.X, endY: endPosition.Y }
 
     setRoles(roles => ([...roles, newRole]));
 
@@ -103,7 +103,7 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
     const xPosition = event.clientX - rect.left; //x position within the element.
     const yPosition = event.clientY - rect.top;  //y position within the element.
 
-    setEndPosition({X: (xPosition * 2), Y: (yPosition * 2)})
+    setEndPosition({ X: (xPosition * 2), Y: (yPosition * 2) })
   }
 
   createTheme('canvasTheme', {
@@ -235,24 +235,24 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
   const recalculateCanvas = (canvas, context) => {
     const ratio = getPixelRatio(context);
     const width = getComputedStyle(canvas)
-        .getPropertyValue('width')
-        .slice(0, -2);
+      .getPropertyValue('width')
+      .slice(0, -2);
     const height = getComputedStyle(canvas)
-        .getPropertyValue('height')
-        .slice(0, -2);
+      .getPropertyValue('height')
+      .slice(0, -2);
 
     canvas.width = width * ratio;
     canvas.height = height * ratio;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
 
-}
+  }
 
-  const Canvas = ({colors, positions}) => {
+  const Canvas = ({ colors, positions }) => {
     //console.log({props})
-  
+
     const canvasRef = useRef(null)
-    const ballRadius  = 10;
+    const ballRadius = 10;
 
     useEffect(() => {
       const canvas = canvasRef.current
@@ -266,12 +266,12 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
       context.fill();
       context.closePath();
     }, [colors.secondary, ballRadius, positions])
-    
+
     return <StyledCanvas ref={canvasRef} />
   }
 
 
-const pageColors = { "primary": "#fff", "background": "#321450", "secondary": "#d2ff00" }
+  const pageColors = { "primary": "#fff", "background": "#321450", "secondary": "#d2ff00" }
 
   return (
     <div style={{ width: "90%", color: "white" }}>
@@ -319,10 +319,6 @@ const pageColors = { "primary": "#fff", "background": "#321450", "secondary": "#
                   <MenuItem value="AML">AML</MenuItem>
                   <MenuItem value="ST">ST</MenuItem>
 
-
-
-
-
                 </Select>
               </FormControl>
               <FormControl variant="outlined" className={classes.formControl}>
@@ -350,26 +346,26 @@ const pageColors = { "primary": "#fff", "background": "#321450", "secondary": "#
 
 
 
-          <div style={{display: "flex", marginTop: "2em"}}>
-      <PitchBox onClick={onClickStart}>
+          <div style={{ display: "flex", marginTop: "2em", flexWrap: "wrap" }}>
+            <PitchBox onClick={onClickStart}>
 
-<Canvas colors={colors} positions={startPosition} />
+              <Canvas colors={colors} positions={startPosition} />
 
 
-      </PitchBox>
-      <PitchBox onClick={onClickEnd}>
-      <Canvas colors={colors} positions={endPosition} />
+            </PitchBox>
+            <PitchBox onClick={onClickEnd}>
+              <Canvas colors={colors} positions={endPosition} />
 
-      </PitchBox>
-      <div>
-      <div style={{marginBottom: "1em"}}><strong>Starting-Point:</strong> <span style={{marginLeft: "0.5em"}}>X: {startPosition.X}, Y: {startPosition.Y}</span> </div>
-      <div><strong>Ending-Point:</strong> <span style={{marginLeft: "0.5em"}}>X: {endPosition.X}, Y: {endPosition.Y}</span></div>
+            </PitchBox>
+            <div style={{paddingTop: "1em"}}>
+              <div style={{ marginBottom: "1em" }}><strong>Starting-Point:</strong> <span style={{ marginLeft: "0.5em" }}>X: {startPosition.X}, Y: {startPosition.Y}</span> </div>
+              <div><strong>Ending-Point:</strong> <span style={{ marginLeft: "0.5em" }}>X: {endPosition.X}, Y: {endPosition.Y}</span></div>
 
-        
-        
-      </div>
 
-    </div>
+
+            </div>
+
+          </div>
 
 
           <StyledButton colors={colors}

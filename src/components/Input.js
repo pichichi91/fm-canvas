@@ -5,14 +5,14 @@ import TextField from '@material-ui/core/TextField';
 import ClearIcon from '@material-ui/icons/Clear';
 import AddIcon from '@material-ui/icons/Add';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Center, StyledButton,  StyledSwitch } from "./Styling"
+import { Center, StyledButton, StyledSwitch } from "./Styling"
 import RolesList from './RolesList';
 import styled from 'styled-components'
 import ColorPicker from "./ColorPicker"
 import React from 'react';
 
 
-function InputForm({colors, setColors, ...props}) {
+function InputForm({ colors, setColors, ...props }) {
 
   const theme = createMuiTheme({
     palette: {
@@ -29,7 +29,7 @@ function InputForm({colors, setColors, ...props}) {
 
         <FormControlLabel
           control={
-            <StyledSwitch  colors={colors}
+            <StyledSwitch colors={colors}
               checked={props.animation}
               onChange={props.handleChange}
               name="checked"
@@ -40,41 +40,46 @@ function InputForm({colors, setColors, ...props}) {
 
         />
         <PositionWrapper>
-        <div className="direction-column">
-        <h2>Colors</h2>
-        <ColorPicker colors={colors} setColors={setColors} />
-</div>
-        </PositionWrapper>
-        <PositionWrapper>
-        <div className="direction-column">
-
-        <h2>Add Players</h2>
-
-          <Autocomplete  colors={colors}
-            id="role"
-            options={props.roles}
-            className="first-element"
-            value={props.singleRole}
-            color="primary"
-            getOptionLabel={(option) => option.role}
-            renderOption={(option) => (
-        <React.Fragment>
-        <div display={{display: "flex"}}>
-           <div style={{ fontWeight: "bold", paddingRight: "0.5em" }}>{option.role}</div> <div style={{ fontSize: "0.6em" }}> <strong>Duty</strong>: {option.duty}, <strong>Position</strong>: {option.position}  </div>
-           </div>
-        </React.Fragment>
-      )}
-            onChange={(event, newValue) => {props.setSingleRole(newValue) }}
-            style={{ width: "177%", paddingBottom: "1em" }}
-            renderInput={(params) => <TextField {...params}
-              label="Role" variant="outlined" color="primary" />}
-          />
+          <div className="direction-column">
+            <h2>Colors</h2>
+            <ColorPicker colors={colors} setColors={setColors} />
           </div>
         </PositionWrapper>
         <PositionWrapper>
+          <div className="direction-column">
+
+            <h2>Add Players</h2>
+            <div style={{display: "flex", alignItems: "center"}}>
+              <Autocomplete colors={colors}
+                id="role"
+                options={props.roles}
+                className="first-element"
+                value={props.singleRole}
+                color="primary"
+                getOptionLabel={(option) => option.role}
+                renderOption={(option) => (
+                  <React.Fragment>
+                    <div display={{ display: "flex" }}>
+                      <div style={{ fontWeight: "bold", paddingRight: "0.5em" }}>{option.role}</div> <div style={{ fontSize: "0.6em" }}> <strong>Duty</strong>: {option.duty}, <strong>Position</strong>: {option.position}  </div>
+                    </div>
+                  </React.Fragment>
+                )}
+                onChange={(event, newValue) => { props.setSingleRole(newValue) }}
+                style={{ width: "50%" }}
+                renderInput={(params) => <TextField {...params}
+                  label="Role" variant="outlined" color="primary" />}
+              />
+              <div style={{display: "flex"}}>
+                <a target="_blank" style={{ color: colors.secondary, fontWeight: "bold", fontSize: "1.2em", textDecoration: "auto" }} href="/roles">Add More Roles?</a>
+              </div>
+            </div>
+          </div>
+        </PositionWrapper>
+
+        <PositionWrapper>
 
 
-          <StyledButton  colors={colors}
+          <StyledButton colors={colors}
             variant="outlined"
             size="large"
             color="primary"
@@ -85,7 +90,7 @@ function InputForm({colors, setColors, ...props}) {
           >
             Add to Pitch
 </StyledButton>
-          <StyledButton  colors={colors}
+          <StyledButton colors={colors}
             variant="outlined"
             color="primary"
             size="large"
@@ -121,7 +126,7 @@ justify-content: center;
 
 .direction-column{
   flex-direction: column;
-
+  width: 100%;
 }
 
 
