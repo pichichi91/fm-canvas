@@ -51,14 +51,15 @@ const recalculateCanvas = (canvas, context) => {
 }
 
 
-const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) => {
+const Player = ({ startX, startY, endX, endY, animation, colors, ...props }) => {
     let ref = useRef();
     const [state] = useState({
         x: startX, y: startY, speedX: endX - startX, speedY: endY - startY
     });
 
     const [ballRadius, setBallRadius] = useState(15)
-    const [isWaiting, setIsWaiting] = useState(false);
+    const [isWaitingY, setIsWaitingY] = useState(false);
+    const [isWaitingX, setIsWaitingX] = useState(false);
 
     const [startTime, setStartTime] = useState(Date.now());
 
@@ -68,19 +69,21 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
         let canvas = ref.current;
         const context = canvas.getContext('2d');
 
-       
+
         let requestId;
         recalculateCanvas(canvas, context, state)
 
-        if(state.x === startX){
+        if (state.x === startX) {
             const sizeRatio = 1 / 800 * canvas.width
             state.x = state.x * sizeRatio
         }
-        if(state.y === startY){
+        if (state.y === startY) {
             state.y = state.y * (1 / 800 * canvas.height)
         }
 
         const speedY = Math.abs(endY - startY) / -800;
+        const speedX = Math.abs(endX - startX) / -800;
+
         const drawBall = () => {
             context.beginPath();
             context.arc(state.x, state.y, ballRadius, 0, Math.PI * 2);
@@ -95,20 +98,29 @@ const Player = ({ startX, startY, endX, endY, animation, colors,  ...props }) =>
             resize(canvas);
             drawBall();
 
-            if (animation && !isWaiting) {
-            state.y += speedY;
+            if (animation ) {
+                if(!isWaitingX){
+                    state.x += speedX;
+                }
+
+                if (!isWaitingY){
+                    state.y += speedY;
+
+                }
             }
 
-            if (state.y <= endY) {
-
-            setIsWaiting(true);
-              
-            }  else {
-                
+            if (state.y <= endY  ) {
+                setIsWaitingY(true);
             }
+
+            if ( state.x <= endX  ) {
+                setIsWaitingX(true);
+            }
+
+
+
             if (state.y + speedY > state.endY - ballRadius || state.y + speedY < ballRadius) {
                 state.y = startY;
-
 
             }
 
