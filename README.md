@@ -2,7 +2,7 @@
 
 This project uses HTML5 canvas to display movements of certain football player on the pitch using React:
 
-![Show Case](public/showcase.png "Show Case")
+![Show Case](public/showcase.PNG "Show Case")
 
 Currently, only 3 roles are being added by default - more Roles can be added manually to make the appear correctly on the pitch vi /roles or clicking on the link on the UI.
 
