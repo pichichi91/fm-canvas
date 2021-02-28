@@ -32,23 +32,18 @@ width: 100%;
   color: ${props => props.colors.secondary};
 
 }
+.MuiSlider-markLabelActive, .MuiSlider-markLabel {
+  padding-top: 0.5em;
+  color: ${props => props.colors.primary};
+  font-weight: bold;
 
-
+}
+.MuiSlider-root {
+  color: ${props => props.colors.secondary};
+}
 `
 
-export const StyledButton = withStyles({
-  root: {
-    '& span': {
-      fontSize: "1.2em"
 
-    },
-    '& .MuiTypography-body1': {
-      fontSize: "1.5em"
-
-    },
-
-  }
-})(Button)
 
 
 export const StyledSwitch = withStyles({
@@ -67,6 +62,20 @@ export const StyledSwitch = withStyles({
   }
 })(Switch)
 
+
+export const StyledButton = withStyles({
+  root: {
+    '& span': {
+      fontSize: "1.2em"
+
+    },
+    '& .MuiTypography-body1': {
+      fontSize: "1.5em"
+
+    },
+
+  }
+})(Button)
 
 
 export const Main = styled.div`

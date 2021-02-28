@@ -3,149 +3,55 @@ import { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import styled from 'styled-components';
 
-const getPixelRatio = context => {
-    var backingStore =
-        context.backingStorePixelRatio ||
-        context.webkitBackingStorePixelRatio ||
-        context.mozBackingStorePixelRatio ||
-        context.msBackingStorePixelRatio ||
-        context.oBackingStorePixelRatio ||
-        context.backingStorePixelRatio ||
-        1;
+import { resize } from "./../helpers/canvas"
 
-    return (window.devicePixelRatio || 1) / backingStore;
-};
+const Player = ({ startX, startY, endX, endY, animation, colors, speed, ...props }) => {
+    const canvasRef = useRef();
 
-const resize = (canvas) => {
-
-    // Lookup the size the browser is displaying the canvas.
-    const displayWidth = canvas.clientWidth;
-    const displayHeight = canvas.clientHeight;
-
-    // Check if the canvas is not the same size.
-    if (canvas.width !== displayWidth ||
-        canvas.height !== displayHeight) {
-
-        // Make the canvas the same size
-        canvas.width = displayWidth;
-        canvas.height = displayHeight;
-    }
-
-    // TODO Adjust Position based on resize
-}
-
-const recalculateCanvas = (canvas, context) => {
-    const ratio = getPixelRatio(context);
-    const width = getComputedStyle(canvas)
-        .getPropertyValue('width')
-        .slice(0, -2);
-    const height = getComputedStyle(canvas)
-        .getPropertyValue('height')
-        .slice(0, -2);
-
-    canvas.width = width * ratio;
-    canvas.height = height * ratio;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-
-}
-
-
-const Player = ({ startX, startY, endX, endY, animation, colors, ...props }) => {
-    let ref = useRef();
-    const [state] = useState({
-        x: startX, y: startY, speedX: endX - startX, speedY: endY - startY
-    });
-
-    const [ballRadius, setBallRadius] = useState(15)
-    const [isWaitingY, setIsWaitingY] = useState(false);
-    const [isWaitingX, setIsWaitingX] = useState(false);
-
-    const [startTime, setStartTime] = useState(Date.now());
-
-    console.log(startTime);
-
+    const [ballRadius] = useState(15)
     useEffect(() => {
-        let canvas = ref.current;
+        const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
 
+        let x = startX;
+        let y = startY;
 
-        let requestId;
-        recalculateCanvas(canvas, context, state)
+        const speedY = (Math.abs(endY - startY) / - 800) * 0.5 * speed;
+        const speedX = Math.abs(endX - startX) / - 800 * 0.5 * speed;
 
-        if (state.x === startX) {
-            const sizeRatio = 1 / 800 * canvas.width
-            state.x = state.x * sizeRatio
-        }
-        if (state.y === startY) {
-            state.y = state.y * (1 / 800 * canvas.height)
-        }
-
-        const speedY = Math.abs(endY - startY) / -800;
-        const speedX = Math.abs(endX - startX) / -800;
-
-        const drawBall = () => {
+        function drawBall() {
             context.beginPath();
-            context.arc(state.x, state.y, ballRadius, 0, Math.PI * 2);
+            context.arc(x, y, ballRadius, 0, Math.PI * 2);
             context.fillStyle = colors.secondary;
             context.fill();
             context.closePath();
         }
 
-        const render = () => {
-
+        function draw() {
             context.clearRect(0, 0, canvas.width, canvas.height);
-            resize(canvas);
             drawBall();
-
-            if (animation ) {
-                if(!isWaitingX){
-                    state.x += speedX;
-                }
-
-                if (!isWaitingY){
-                    state.y += speedY;
-
-                }
+            if (animation && y > endY) {
+                y += speedY;
+            }
+            if (animation && x > endX) {
+                x += speedX;
             }
 
-            if (state.y <= endY  ) {
-                setIsWaitingY(true);
+            if (x > endX && y > endY) {
+                y = startY;
+                x = startX;
             }
+        }
 
-            if ( state.x <= endX  ) {
-                setIsWaitingX(true);
-            }
+        resize(canvas)
+        draw()
+        setInterval(draw, 1);
 
-
-
-            if (state.y + speedY > state.endY - ballRadius || state.y + speedY < ballRadius) {
-                state.y = startY;
-
-            }
-
-
-            requestId = requestAnimationFrame(render);
-            if (!animation) {
-                cancelAnimationFrame(requestId);
-
-            }
-
-        };
-
-
-
-        render();
-        return () => {
-            cancelAnimationFrame(requestId);
-        };
     });
 
     return (
         <StyledPlayer key={Math.random()} className="player-canvas"
-            ref={ref}
-
-        />
+            ref={canvasRef} />
     );
 };
 

@@ -1,36 +1,19 @@
-
 import React, { useRef, useEffect, useCallback } from 'react'
 import styled from "styled-components"
+import { resize } from "./../helpers/canvas"
 const Field = ({ colors, ...props }) => {
 
     const canvasRef = useRef(null)
-
     const background = colors.background
     const primary = colors.primary
 
-    const resize = (canvas) => {
-
-        // Lookup the size the browser is displaying the canvas.
-        const displayWidth = canvas.clientWidth;
-        const displayHeight = canvas.clientHeight;
-
-        // Check if the canvas is not the same size.
-        if (canvas.width !== displayWidth ||
-            canvas.height !== displayHeight) {
-
-            // Make the canvas the same size
-            canvas.width = displayWidth;
-            canvas.height = displayHeight;
-        }
-    }
-
-    const draw = useCallback((context, frameCount, background, primary) => {
+    const draw = useCallback((context, background, primary) => {
 
         resize(context.canvas);
 
         context.clearRect(0, 0, context.canvas.width, context.canvas.height)
         context.beginPath()
-        context.arc(50, 100, 20 * Math.sin(frameCount * 0.05) ** 2, 0, 2 * Math.PI)
+        context.arc(50, 100, 20 * Math.sin(1 * 0.05) ** 2, 0, 2 * Math.PI)
         context.fill()
         context.fillStyle = background
         context.fillRect(0, 0, context.canvas.width, context.canvas.height)
@@ -91,26 +74,18 @@ const Field = ({ colors, ...props }) => {
     useEffect(() => {
         const canvas = canvasRef.current
         const context = canvas.getContext('2d')
-        //Our first draw
-        let frameCount = 1
-        let animationFrameId
 
         const render = () => {
-            frameCount++
-            draw(context, frameCount, background, primary)
-            animationFrameId = requestAnimationFrame(render)
+            draw(context, background, primary)
 
         }
         render()
 
-        return () => {
-            cancelAnimationFrame(animationFrameId)
-        }
 
 
     }, [draw, canvasRef, background, primary])
 
-    return <StyledField id="c" width="10" height="15" ref={canvasRef} {...props} />
+    return <StyledField id="field" width="10" height="15" ref={canvasRef} {...props} />
 }
 
 

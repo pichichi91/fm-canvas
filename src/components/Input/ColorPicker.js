@@ -1,6 +1,6 @@
 import React from 'react';
-import Picker from './Picker';
-import { ColorPickerContainer } from "./Styling"
+import Picker from '../Picker';
+import { ColorPickerContainer } from "../Styling"
 const ColorPicker = ({ colors, setColors }) => {
 
   const handleChangeCompleteBackground = (color) => {
@@ -26,11 +26,8 @@ const ColorPicker = ({ colors, setColors }) => {
     <>
       <ColorPickerContainer>
 
-
-
         <Picker color={colors.background} onChange={handleChangeCompleteBackground} />
         <Picker color={colors.primary} onChange={handleChangeCompletePrimary} />
-
         <Picker color={colors.secondary} onChange={handleChangeCompleteSecondary} />
 
       </ColorPickerContainer>

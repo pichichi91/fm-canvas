@@ -1,18 +1,20 @@
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import Slider from '@material-ui/core/Slider';
+import { withStyles } from "@material-ui/core/styles";
 
 import ClearIcon from '@material-ui/icons/Clear';
 import AddIcon from '@material-ui/icons/Add';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Center, StyledButton, StyledSwitch } from "./Styling"
-import RolesList from './RolesList';
+import { Center, StyledButton, StyledSwitch } from "../Styling"
+import RolesList from '../RolesList';
 import styled from 'styled-components'
 import ColorPicker from "./ColorPicker"
 import React from 'react';
 
 
-function InputForm({ colors, setColors, ...props }) {
+function InputForm({ colors, setColors, speed, ...props }) {
 
   const theme = createMuiTheme({
     palette: {
@@ -21,6 +23,42 @@ function InputForm({ colors, setColors, ...props }) {
       }
     }
   });
+
+  const marks = [
+
+
+
+
+    {
+      value: 1,
+      label: '1X',
+    },
+    {
+      value: 2,
+      label: '2X',
+    },
+    {
+      value: 3,
+      label: '3X',
+    },
+    {
+      value: 4,
+      label: '4X',
+    },
+    {
+      value: 5,
+      label: '5X',
+    },
+
+  ];
+
+  function valuetext(value) {
+    return `${value} X`;
+  }
+
+  function valueLabelFormat(value) {
+    return `${value} X`;
+  }
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -41,6 +79,13 @@ function InputForm({ colors, setColors, ...props }) {
         />
         <PositionWrapper>
           <div className="direction-column">
+            <h2>Animation Speed</h2>
+            <PrettoSlider onChange={(event, newValue) => { props.setSpeed(newValue) }} defaultValue={speed} min={1} max={5} valueLabelFormat={valueLabelFormat} getAriaValueText={valuetext} aria-labelledby="discrete-slider-restrict" step={null} valueLabelDisplay="auto" marks={marks}
+            />
+          </div>
+        </PositionWrapper>
+        <PositionWrapper>
+          <div className="direction-column">
             <h2>Colors</h2>
             <ColorPicker colors={colors} setColors={setColors} />
           </div>
@@ -49,7 +94,7 @@ function InputForm({ colors, setColors, ...props }) {
           <div className="direction-column">
 
             <h2>Add Players</h2>
-            <div style={{display: "flex", alignItems: "center"}}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <Autocomplete colors={colors}
                 id="role"
                 options={props.roles}
@@ -69,7 +114,7 @@ function InputForm({ colors, setColors, ...props }) {
                 renderInput={(params) => <TextField {...params}
                   label="Role" variant="outlined" color="primary" />}
               />
-              <div style={{display: "flex"}}>
+              <div style={{ display: "flex" }}>
                 <a target="_blank" style={{ color: colors.secondary, fontWeight: "bold", fontSize: "1.2em", textDecoration: "auto" }} href="/roles">Add More Roles?</a>
               </div>
             </div>
@@ -114,6 +159,38 @@ function InputForm({ colors, setColors, ...props }) {
   );
 
 }
+
+
+
+const PrettoSlider = withStyles({
+  root: {
+    color: '#52af77',
+    height: 8,
+  },
+  thumb: {
+    height: 24,
+    width: 24,
+    backgroundColor: '#fff',
+    border: '2px solid currentColor',
+    marginTop: -8,
+    marginLeft: -12,
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: 'calc(-50% + 4px)',
+  },
+  track: {
+    height: 8,
+    borderRadius: 4,
+  },
+  rail: {
+    height: 8,
+    borderRadius: 4,
+  },
+})(Slider);
 
 const PositionWrapper = styled.div`
 display: flex;

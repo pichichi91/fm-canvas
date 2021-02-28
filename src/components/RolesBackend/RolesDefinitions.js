@@ -1,6 +1,6 @@
 import DataTable, { createTheme } from 'react-data-table-component';
 import AddIcon from '@material-ui/icons/Add';
-import { StyledButton, Center } from "./Styling"
+import { StyledButton, Center } from "./Styles"
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
@@ -357,7 +357,7 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
               <Canvas colors={colors} positions={endPosition} />
 
             </PitchBox>
-            <div style={{paddingTop: "1em"}}>
+            <div style={{ paddingTop: "1em" }}>
               <div style={{ marginBottom: "1em" }}><strong>Starting-Point:</strong> <span style={{ marginLeft: "0.5em" }}>X: {startPosition.X}, Y: {startPosition.Y}</span> </div>
               <div><strong>Ending-Point:</strong> <span style={{ marginLeft: "0.5em" }}>X: {endPosition.X}, Y: {endPosition.Y}</span></div>
 
