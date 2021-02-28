@@ -109,12 +109,12 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
   createTheme('canvasTheme', {
 
     background: {
-      default: "#321450",
+      default: "#103f79",
       text: 'white',
 
     },
     context: {
-      background: '#321450',
+      background: '#103f79',
       text: "white",
     },
 
@@ -188,7 +188,7 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
   const customStyles = {
     header: {
       style: {
-        color: "#D2FF00",
+        color: "#F3B229",
         fontSize: "2em"
 
       }
@@ -204,12 +204,12 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
       style: {
         fontSize: "1.3em",
 
-        color: "#D2FF00",
+        color: "#F3B229",
         paddingLeft: '16px',
         paddingRight: '16px',
         borderBottomStyle: 'solid',
         borderBottomWidth: '0.5px',
-        borderBottomColor: "#D2FF00",
+        borderBottomColor: "#F3B229",
       },
       activeSortStyle: {
         color: "#D2FF00",
@@ -217,16 +217,16 @@ const RolesDefinitions = ({ roles, setRoles, colors }) => {
           outline: 'none',
         },
         '&:hover:not(:focus)': {
-          color: "#D2FF00",
+          color: "#F3B229",
         },
       },
       inactiveSortStyle: {
         '&:focus': {
           outline: 'none',
-          color: "#D2FF00",
+          color: "#F3B229",
         },
         '&:hover': {
-          color: "#D2FF00",
+          color: "#F3B229",
         },
       },
     },

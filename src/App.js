@@ -23,7 +23,7 @@ function App() {
     if (window.location.href.replace(window.location.origin, '') === "/") {
       document.body.style.backgroundColor = colors.background;
     } else {
-      document.body.style.backgroundColor = "#321450";
+      document.body.style.backgroundColor = "#103f79";
     }
   });
 
